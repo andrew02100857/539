@@ -6,7 +6,8 @@ import numpy as np
 def main():
     data = pd.read_csv("歷史數據.csv")
     rec = np.zeros((40, 40, 40))
-    len = 30
+    len = 12
+
     windows = 0
     little = 6
     balls = []
@@ -14,6 +15,7 @@ def main():
     games = 0
     n = 0
     present = []
+    dbc = np.zeros((40, 40, 40))
     st = 493 - little * 20 - len
     for idx, rows in data.iterrows():
         if idx < st:
@@ -24,12 +26,26 @@ def main():
 
         if idx > st + len:
             if windows == 0:
+                n = 0
+                for i in range(1, 40):
+                    for j in range(i + 1, 40):
+                        for k in range(j + 1, 40):
+                            if rec[i][j][k] > n:
+                                n = rec[i][j][k]
+                                balls = [[i, j, k]]
+                            elif rec[i][j][k] == n:
+                                balls.append([i, j, k])
                 present = []
                 for i in balls:
-                    present.append(i)
+                    nums = 0
+                    for j in i:
+                        if j in test:
+                            nums += 1
+                    if num
                 windows = little
 
             if windows > 0:
+                
                 nums = 0
                 for i in present:
                     for j in range(5):
@@ -55,10 +71,7 @@ def main():
                         a = data.iloc[idx - len][i]
                         b = data.iloc[idx - len][j]
                         c = data.iloc[idx - len][k]
-                        if n == rec[a][b][c]:
-                            n -= 1
                         rec[a][b][c] -= 1
-
 
         for i in range(0, 5):
             for j in range(i + 1, 5):
@@ -73,6 +86,7 @@ def main():
                     if rec[a][b][c] > n:
                         n = rec[a][b][c]
                         balls = [a, b, c]
+        
         
 
 
