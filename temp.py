@@ -10,8 +10,8 @@ def main():
     rec = [[[0 for _ in range(40)] for _ in range(40)] for _ in range(40)]
     balls = []
     max = 0
-    st = 200
-    fin = 300
+    st = 394
+    fin = 495
     for idx, rows in data.iterrows():
         if idx > fin or idx < st:
             continue

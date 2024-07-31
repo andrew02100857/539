@@ -7,10 +7,10 @@ def main():
     # data = data.iloc[::-1]
     # data = data.reset_index()
     data = data.astype(int)
-    balls = [16,17,21]
-    st = 300
-
-    fin = 400
+    balls = [8,19,30]
+    windows = 30
+    fin = 495
+    st = fin - windows - 1
     rec = [0, 0, 0, 0]
     for idx, rows in data.iterrows():
         times = 0
