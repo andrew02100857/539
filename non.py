@@ -6,7 +6,7 @@ import numpy as np
 def main():
     data = pd.read_csv("歷史數據.csv")
     rec = np.zeros((40, 40, 40))
-    len = 12
+    l = 6
 
     windows = 0
     little = 6
@@ -16,7 +16,7 @@ def main():
     n = 0
     present = []
     dbc = np.zeros((40, 40, 40))
-    st = 493 - little * 20 - len
+    st = 500 - little * 20 - l
     for idx, rows in data.iterrows():
         if idx < st:
             continue
@@ -24,7 +24,7 @@ def main():
         for i in range(5):
             test.append(int(rows[i]))
 
-        if idx > st + len:
+        if idx > st + l:
             if windows == 0:
                 n = 0
                 for i in range(1, 40):
@@ -36,18 +36,33 @@ def main():
                             elif rec[i][j][k] == n:
                                 balls.append([i, j, k])
                 present = []
-                for i in balls:
-                    nums = 0
-                    for j in i:
-                        if j in test:
-                            nums += 1
-                    if num
+                last = np.zeros((len(balls)))
+                for i in range(l):
+                    t = []
+                    for j in range(5):
+                        a = int(data.iloc[idx - i][j])
+                        t.append(a)
+                    maxx = -1
+                    for b in range(len(balls)):
+                        select = balls[b]
+                        for j in range(3):
+                            for k in range(j + 1, 3):
+                                if select[j] in t and select[k] in t:
+                                    last[b] += 1
+                        if maxx < last[b]:
+                            maxx = last[b]
+                            present = [select]
+                        elif maxx == last[b]:
+                            present.append(select)
+                    
+                                
+                                
                 windows = little
 
             if windows > 0:
                 
                 nums = 0
-                for i in present:
+                for i in present[0]:
                     for j in range(5):
                         if i == test[j]:
                             nums += 1
@@ -55,22 +70,22 @@ def main():
                 if nums != 0:
                     win += 1
                     print("win")
-                    print(present, test)
-                elif nums == 3:
-                    print("lose")
-                    print(present, test)
+                    print(present[0], test)
+                # elif nums == 3:
+                #     print("lose")
+                #     print(present[0], test)
                 else:
                     print("lose")
-                    print(present, test)
+                    print(present[0], test)
                 games += 1
                 windows -= 1
 
             for i in range(0, 5):
                 for j in range(i + 1, 5):
                     for k in range(j + 1, 5):
-                        a = data.iloc[idx - len][i]
-                        b = data.iloc[idx - len][j]
-                        c = data.iloc[idx - len][k]
+                        a = data.iloc[idx - l][i]
+                        b = data.iloc[idx - l][j]
+                        c = data.iloc[idx - l][k]
                         rec[a][b][c] -= 1
 
         for i in range(0, 5):

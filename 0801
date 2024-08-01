@@ -1,0 +1,29 @@
+import pandas as pd
+import numpy as np
+
+
+def main():
+    data = pd.read_csv("歷史數據.csv")
+    # data = data.iloc[::-1]
+    # data = data.reset_index()
+    data = data.astype(int)
+    balls = [1,2,3,4,6]
+    windows = 30
+    fin = 500
+    st = 0
+    times = 0
+    for idx, rows in data.iterrows():
+        temp = []
+        for i in rows:
+            temp.append((int(i)))
+        num = 0
+        for i in balls:
+            if i in temp:
+                num += 1
+        if num == 1 or num == 2:
+            times += 1
+        
+    print(times)
+    
+
+main()
