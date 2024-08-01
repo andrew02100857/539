@@ -3,16 +3,18 @@ import numpy as np
 
 
 def main():
-    data = pd.read_csv("歷史數據.csv")
+    data = pd.read_csv("history.csv")
     # data = data.iloc[::-1]
     # data = data.reset_index()
     data = data.astype(int)
     balls = [1,2,3,4,6]
     windows = 30
-    fin = 500
-    st = 0
+    fin = 1000
+    st = 1121 - fin
     times = 0
     for idx, rows in data.iterrows():
+        if st > idx:
+            continue
         temp = []
         for i in rows:
             temp.append((int(i)))
@@ -22,7 +24,6 @@ def main():
                 num += 1
         if num == 1 or num == 2:
             times += 1
-        
     print(times)
     
 
