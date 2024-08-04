@@ -28,12 +28,12 @@ def main():
                     balls.append([i, j, k])
     present = []
     last = np.zeros((len(balls)))
+    maxx = -1
     for idx, rows in data.iterrows():
         t = []
         for j in rows:
             t.append(int(j))
 
-        maxx = -1
         for b in range(len(balls)):
             select = balls[b]
             for j in range(3):
