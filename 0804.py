@@ -9,6 +9,7 @@ def main():
     win = 0
     games = 0
     lose = 0
+    same = 0
     prev = 'win'
     for idx, rows in data.iterrows():
         if idx < 6:
@@ -58,35 +59,47 @@ def main():
                     present.append(i)
                 elif last[p] == last[p]:
                     present.append(i)
-            
+        
+        last_check = [0 for i in range(len(present))]
+        max = -1
+        index = 0
+
+        same = 0
+        for j in range(1, l + 1):
+            for i in range(len(present)):
+                temp = []
+                for k in range(5):
+                    temp.append(int(data.iloc[idx - j][k]))
+                for nums in present[i]:
+                    if nums in temp:
+                        last_check[i] += 1
+                if last_check[i] > max:
+                    max = last_check[i]
+                    index = i
+                    same = 1
+                if last_check[i] == max:
+                    same += 1
+
                         
         t = []
         for j in rows:
             t.append(int(j))
         
         num = 0
-        for i in present[0]:
+        for i in present[index]:
             if i in t:
                 num += 1
-        count += num
-        # if prev == 'lose':
-        #     games += 1
-        #     if num == 1 or num == 2:
-        #         win += 1
-        #         prev = "win"
-        #     else:
-        #         lose += 1
-        #         prev = 'lose'
         if num == 1 or num == 2:
-            print("win", present[0], t)
+            print("win", present[index], t)
             prev = 'win'
             win += 1
         else :
-            print("lose", present[0], t)
+            print("lose", present[index], t)
             prev = 'lose'
             lose += 1
+        print(same)
         games += 1
-                
+        
 
     print(win/ games)
     print(win, lose, games)
