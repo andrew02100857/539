@@ -1,50 +1,47 @@
 import pandas as pd
 import numpy as np
 
-
-
 def main():
     data = pd.read_csv("new.csv")
-    rec = np.zeros((40, 40, 40))
-    balls = []
-    n = 0
     for idx, rows in data.iterrows():
-        temp = []
+        balls = []
         for i in rows:
-            temp.append(int(i))
-        for i in range(0, 5):
+            balls.append(int(i))
+        
+        three = []
+        list = []
+        t = []
+        for i in range(5):
+            t.append(int(rows[i]))
+
+        for i in range(5):
             for j in range(i + 1, 5):
                 for k in range(j + 1, 5):
-                    a = temp[i]
-                    b = temp[j]
-                    c = temp[k]
-                    rec[a][b][c] += 1
-                    if n < rec[a][b][c]:
-                        n = rec[a][b][c]
-    for i in range(1, 40):
-        for j in range(i + 1, 40):
-            for k in range(j + 1, 40):
-                if rec[i][j][k] == n:
-                    balls.append([i, j, k])
-    present = []
-    last = np.zeros((len(balls)))
-    maxx = -1
-    for idx, rows in data.iterrows():
-        t = []
-        for j in rows:
-            t.append(int(j))
+                    if [t[i],t[j], t[k]] not in three:
+                        three.append([t[i], t[j], t[k]])
 
-        for b in range(len(balls)):
-            select = balls[b]
+        list.append(t)
+
+    two_check = [0 for i in range(len(three))]
+    two = []
+    max = -1
+    for i in range(len(three)):
+        for b in list:
             for j in range(3):
                 for k in range(j + 1, 3):
-                    if select[j] in t and select[k] in t:
-                        last[b] += 1
-            if maxx < last[b]:
-                maxx = last[b]
-                present = [select]
-            elif maxx == last[b]:
-                present.append(select)
-    print(present)
+                    if three[i][j] in b and three[i][k] in b:
+                        two_check[i] += 1
+                        if two_check[i] > max:
+                            two = [three[i]]
+                            max = two_check[i]
+                        elif two_check[i] == max:
+                            two.append(three[i])
+
+    count = 0
+    num = 0
+    test = two[0]
+    for i in two:
+        print(i)
+    print(len(two))
+
 main()
-        
