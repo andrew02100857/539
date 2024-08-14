@@ -7,6 +7,8 @@ def main():
     games = 0
     win = 0
     lose = 0
+    prev_p = "win"
+    prev = "win"
     for idx, rows in data.iterrows():
         if idx < l:
             continue
@@ -58,20 +60,27 @@ def main():
         #                     one = [two[i]]
         #                 elif one_check == max:
         #                     one.append(two[i])
-        count = 0
         num = 0
         test = two[0]
-        if len(two) < 5:
+        for i in test:
+            if i in balls:
+                num += 1
+        # if prev == 'lose' and prev_p == 'lose':
+        #     prev_p = prev
+        #     if num == 1 or num == 2:
+        #         prev = 'win'
+        #     continue
+        if len(two) < 500:
             games += 1
-            for i in test:
-                if i in balls:
-                    num += 1
+            prev_p = prev
             if num == 1 or num == 2:
-                print("win", two, balls)
+                print(idx, "win", two, balls)
                 win += 1
+                prev = "win"
             else:
-                print("lose", two, balls)
+                print(idx, "lose", two, balls)
                 lose += 1
+                prev = "lose"
                 # print(len(one))
     print(round(win/games, 3), games, win)
 
@@ -90,4 +99,3 @@ main()
                                      
 
                 
-

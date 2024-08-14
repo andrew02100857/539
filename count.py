@@ -29,7 +29,7 @@ def main():
         for b in list:
             for j in range(3):
                 for k in range(j + 1, 3):
-                    if three[i][j] in b and three[i][k] in b:
+                    if three[i][j] in b or three[i][k] in b:
                         two_check[i] += 1
                         if two_check[i] > max:
                             two = [three[i]]
